@@ -27,9 +27,10 @@ pip install requirements
 
 ### Docker
 
-TODO
-
-
+Build from local ```Dockerfile```:
+```
+docker build . -t sequence_emitter
+```
 
 ## Run
 
@@ -38,12 +39,22 @@ python sequence_emitter.py sequence.json
 ```
 
 #### Additional attributes
-- ```-p [int]```, ```--port [int]``` - specify your favorite port (default is 46001)
+- ```-p [int]```, ```--port [int]``` - specify your favorite port (default is 8080)
 - ```-l```, ```--loop``` - loop the sequence over and over (stop by KeyboardInterrupt)
-- ```-s [float]```, ```--speed [float]``` - playback speed (default is 1.0) (NotImplementedYet)
-- ```-d [float]```, ```--start-delay [float]``` - set delay in seconds before the first sample of the sequence is emitted (NotImplementedYet)
+- ```-s [float]```, ```--speed [float]``` - playback speed (default is 1.0)
+- ```-d [float]```, ```--start-delay [float]``` - set delay in seconds before the first sample of the sequence is emitted (default is 0.0)
 
 
 ### Run with docker
 
-TODO
+Run local container with ```sequence.json``` passed as a volume and redirected port:
+```
+docker run --rm -v $(pwd)/sequence.json:/app/sequence_file -p 40001:8080 -it sequence_emitter
+```
+
+Note that the app inside the  container always loads file ```/app/sequence_file``` and listens on port ```8080```.
+
+Additional arguments can be passed to the container like so:
+```
+docker run --rm -v $(pwd)/sequence.json:/app/sequence_file -p 40001:8080 -it sequence_emitter -l -s 2.5
+```

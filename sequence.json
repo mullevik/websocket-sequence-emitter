@@ -1,5 +1,6 @@
 [
-    {"time": 0, "data": "one"},
-    {"time": 1, "data": "two"},
-    {"time": 2, "data": "three"}
+    {"at_second": 0, "data": {"first": "object"}},
+    {"at_second": 2, "data": 2},
+    {"at_second": 4, "data": "three"},
+    {"at_second": 6, "data": ["f", "o", "u", "r"]}
 ]
