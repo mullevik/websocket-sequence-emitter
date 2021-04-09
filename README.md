@@ -32,11 +32,34 @@ Build from local ```Dockerfile```:
 docker build . -t sequence_emitter
 ```
 
-## Run
+## Specify the sequence
+
+The sequence file can have following types:
+
+### JSON
+```json
+[
+    {"at_second": 0.0, "data": {"first": "object"}},
+    {"at_second": 2.2, "data": 2},
+    {"at_second": 3, "data": "three"},
+    {"at_second": 4, "data": ["f", "o", "u", "r"]}
+]
+```
+This ```sequence.json``` file would initiate a sequence that starts immediately at second ```0.0```.
+It has 4 samples. The ```at_second``` defines at which second from the sequence start
+should this sample be sent to all clients. Anything inside the ```data``` is sent
+over the WebSocket after Python's ```json.dumps``` function is applied to it.
+
+## Run the server
 
 ```
 python sequence_emitter.py sequence.json
 ```
+
+After this command, the server cycles through the sequence.
+Anytime a new WebSocket client is connected, it immediately subscribes for all
+new sequence messages produced by the server.
+WebSocket clients can connect or disconnect at any time. The server does not care.
 
 #### Additional attributes
 - ```-p [int]```, ```--port [int]``` - specify your favorite port (default is 8080)
